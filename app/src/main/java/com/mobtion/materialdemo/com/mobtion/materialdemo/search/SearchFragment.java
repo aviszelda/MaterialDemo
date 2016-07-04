@@ -12,16 +12,12 @@ import android.view.LayoutInflater;
 import android.view.MotionEvent;
 import android.view.View;
 import android.view.ViewGroup;
-import android.widget.ListAdapter;
 import android.widget.Toast;
-
 import com.mobtion.materialdemo.MainAbsFragment;
-import com.mobtion.materialdemo.MainActivity;
 import com.mobtion.materialdemo.R;
 import com.mobtion.materialdemo.com.mobtion.materialdemo.adapters.DividerItemDecoration;
 import com.mobtion.materialdemo.com.mobtion.materialdemo.adapters.listAdapter;
 import com.mobtion.materialdemo.com.mobtion.materialdemo.resources.Person;
-
 import java.util.ArrayList;
 import java.util.List;
 
