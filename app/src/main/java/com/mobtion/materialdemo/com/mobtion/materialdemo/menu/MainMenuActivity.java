@@ -9,6 +9,11 @@ import android.util.Log;
 import android.view.Menu;
 import android.view.MenuItem;
 import android.view.View;
+import android.view.animation.AlphaAnimation;
+import android.view.animation.Animation;
+import android.view.animation.AnimationSet;
+import android.view.animation.LayoutAnimationController;
+import android.view.animation.ScaleAnimation;
 import android.widget.ExpandableListView;
 import android.widget.Toast;
 import com.mobtion.materialdemo.MainAbsFragmentActivity;
@@ -92,6 +97,9 @@ public class MainMenuActivity extends MainAbsFragmentActivity {
         expandableList.setOnGroupClickListener(new ExpandableListView.OnGroupClickListener() {
             @Override
             public boolean onGroupClick(ExpandableListView expandableListView, View view, int i, long l) {
+
+                //setupLayoutAnimation();
+
                 Log.d("DEBUG", "heading clicked");
                 Log.d("DEBUG", "heading int i " + i);
                 Log.d("DEBUG", "heading long " + l);
@@ -103,11 +111,17 @@ public class MainMenuActivity extends MainAbsFragmentActivity {
 
             @Override
             public void onGroupExpand(int groupPosition) {
-                if (lastExpandedPosition != -1
-                        && groupPosition != lastExpandedPosition) {
-                    expandableList.collapseGroup(lastExpandedPosition);
+//                if (lastExpandedPosition != -1
+//                        && groupPosition != lastExpandedPosition) {
+//                    expandableList.collapseGroup(lastExpandedPosition);
+//                }
+//                lastExpandedPosition = groupPosition;
+
+                for(int i=0; i<mMenuAdapter.getGroupCount(); i++) {
+                    if(i != groupPosition) {
+                        expandableList.collapseGroup(i);
+                    }
                 }
-                lastExpandedPosition = groupPosition;
             }
         });
 
@@ -170,19 +184,19 @@ public class MainMenuActivity extends MainAbsFragmentActivity {
 
         ExpandedMenuModel item1 = new ExpandedMenuModel();
         item1.setIconName("heading1");
-        item1.setIconImg(android.R.drawable.ic_delete);
+        item1.setIconImg(R.drawable.ic_menu_item);
         // Adding data header
         listDataHeader.add(item1);
 
         ExpandedMenuModel item2 = new ExpandedMenuModel();
         item2.setIconName("heading2");
-        item2.setIconImg(android.R.drawable.ic_delete);
+        item2.setIconImg(R.drawable.ic_menu_item);
         listDataHeader.add(item2);
 
 
         ExpandedMenuModel item3 = new ExpandedMenuModel();
         item3.setIconName("heading3");
-        item3.setIconImg(android.R.drawable.ic_delete);
+        item3.setIconImg(R.drawable.ic_menu_item);
         listDataHeader.add(item3);
 
 
@@ -230,6 +244,21 @@ public class MainMenuActivity extends MainAbsFragmentActivity {
                 }
             });
     */
+    }
+
+    private void setupLayoutAnimation() {
+        AnimationSet set = new AnimationSet(true);
+        Animation animation = new AlphaAnimation(0.0f, 1.0f);
+        animation.setDuration(50);
+        set.addAnimation(animation);
+
+        animation = new ScaleAnimation(1.0f, 1.0f, 0.0f, 1.0f, 0.5f, 1.0f);
+        animation.setDuration(50);
+        set.addAnimation(animation);
+
+        LayoutAnimationController controller = new LayoutAnimationController(set, 0.75f);
+        expandableList.setLayoutAnimationListener(null);
+        expandableList.setLayoutAnimation(controller);
     }
 
     public void setUpToolbar(boolean displayHome, int resource) {

@@ -49,18 +49,18 @@ public class LoginFragment extends MainAbsFragment {
     View.OnClickListener LoginOnClickListener = new View.OnClickListener() {
         public void onClick(View v) {
 
-            if(editTextName.getText().toString().isEmpty()) {
-
-                textInputLayoutName.setError("Usuario inválido");
-
-            } else if(editTextPassword.getText().toString().isEmpty()) {
-
-                textInputLayoutPassword.setError("Contraseña inválida");
-
-            } else {
+//            if(editTextName.getText().toString().isEmpty()) {
+//
+//                textInputLayoutName.setError("Usuario inválido");
+//
+//            } else if(editTextPassword.getText().toString().isEmpty()) {
+//
+//                textInputLayoutPassword.setError("Contraseña inválida");
+//
+//            } else {
                 OpenMainContent();
-                //Toast.makeText(getActivity(), "Error", Toast.LENGTH_SHORT).show();
-            }
+//                //Toast.makeText(getActivity(), "Error", Toast.LENGTH_SHORT).show();
+//            }
         }
     };
 
