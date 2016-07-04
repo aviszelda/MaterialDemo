@@ -81,6 +81,11 @@ public class MainMenuActivity extends MainAbsFragmentActivity {
                     mDrawerLayout.closeDrawers();
                 }
 
+                if (i == 2 && i1 == 0 && l == 0) {
+                    Toast.makeText(MainMenuActivity.this, "no hay fragment para este", Toast.LENGTH_SHORT).show();
+                    mDrawerLayout.closeDrawers();
+                }
+
                 return false;
             }
         });
@@ -174,10 +179,12 @@ public class MainMenuActivity extends MainAbsFragmentActivity {
         item2.setIconImg(android.R.drawable.ic_delete);
         listDataHeader.add(item2);
 
+
         ExpandedMenuModel item3 = new ExpandedMenuModel();
         item3.setIconName("heading3");
         item3.setIconImg(android.R.drawable.ic_delete);
         listDataHeader.add(item3);
+
 
         // Adding child data
         List<String> heading1 = new ArrayList<String>();
