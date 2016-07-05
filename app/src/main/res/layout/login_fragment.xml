@@ -8,7 +8,7 @@
         android:id="@+id/widgetEditTextName"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:layout_marginTop="200dp"
+        android:layout_marginTop="@dimen/editTextName_login_marginTop"
         android:layout_marginLeft="20dp"
         android:layout_marginRight="20dp">
 
@@ -25,7 +25,7 @@
         android:id="@+id/widgetEditTextPassword"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:layout_marginTop="280dp"
+        android:layout_marginTop="@dimen/editTextPassword_login_marginTop"
         android:layout_marginLeft="20dp"
         android:layout_marginRight="20dp">
 
@@ -39,21 +39,29 @@
     </android.support.design.widget.TextInputLayout>
 
     <Button
-        android:layout_width="300dp"
+        android:layout_width="@dimen/button_login"
         android:layout_height="wrap_content"
         android:background="@color/colorPrimaryDark"
         android:textColor="@color/white"
         android:text="@string/login"
         android:id="@+id/loginButton"
         android:layout_gravity="center"
-        android:layout_marginTop="300px"/>
+        android:layout_marginTop="@dimen/button_login_marginTop"/>
 
     <ImageView
-        android:layout_width="600px"
+        android:layout_width="@dimen/banner_login"
         android:layout_height="wrap_content"
-        android:layout_marginTop="100px"
+        android:layout_marginTop="@dimen/banner_login_marginTop"
         android:src="@drawable/ic_logo"
         android:id="@+id/imageView"
         android:layout_gravity="center_horizontal|top" />
+
+    <TextView
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginBottom="@dimen/registerLabel_marginBottom"
+        android:text="@string/change_password"
+        android:id="@+id/editPasswordLabel"
+        android:layout_gravity="center_horizontal|bottom" />
 
 </FrameLayout>

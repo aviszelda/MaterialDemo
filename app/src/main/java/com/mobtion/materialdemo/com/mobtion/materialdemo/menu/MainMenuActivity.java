@@ -98,8 +98,6 @@ public class MainMenuActivity extends MainAbsFragmentActivity {
             @Override
             public boolean onGroupClick(ExpandableListView expandableListView, View view, int i, long l) {
 
-                //setupLayoutAnimation();
-
                 Log.d("DEBUG", "heading clicked");
                 Log.d("DEBUG", "heading int i " + i);
                 Log.d("DEBUG", "heading long " + l);
@@ -116,6 +114,10 @@ public class MainMenuActivity extends MainAbsFragmentActivity {
 //                    expandableList.collapseGroup(lastExpandedPosition);
 //                }
 //                lastExpandedPosition = groupPosition;
+
+                //setupLayoutAnimation();
+
+                Log.i("ultimo seleccionado ", String.valueOf(groupPosition));
 
                 for(int i=0; i<mMenuAdapter.getGroupCount(); i++) {
                     if(i != groupPosition) {
@@ -183,34 +185,34 @@ public class MainMenuActivity extends MainAbsFragmentActivity {
         listDataChild = new HashMap<ExpandedMenuModel, List<String>>();
 
         ExpandedMenuModel item1 = new ExpandedMenuModel();
-        item1.setIconName("heading1");
+        item1.setIconName(getResources().getString(R.string.menu_header1));
         item1.setIconImg(R.drawable.ic_menu_item);
         // Adding data header
         listDataHeader.add(item1);
 
         ExpandedMenuModel item2 = new ExpandedMenuModel();
-        item2.setIconName("heading2");
+        item2.setIconName(getResources().getString(R.string.menu_header2));
         item2.setIconImg(R.drawable.ic_menu_item);
         listDataHeader.add(item2);
 
 
         ExpandedMenuModel item3 = new ExpandedMenuModel();
-        item3.setIconName("heading3");
+        item3.setIconName(getResources().getString(R.string.menu_header3));
         item3.setIconImg(R.drawable.ic_menu_item);
         listDataHeader.add(item3);
 
 
         // Adding child data
         List<String> heading1 = new ArrayList<String>();
-        heading1.add("Submenu of item 1");
+        heading1.add(getResources().getString(R.string.submenu1));
 
         List<String> heading2 = new ArrayList<String>();
-        heading2.add("Submenu of item 2");
-        heading2.add("Submenu of item 2");
-        heading2.add("Submenu of item 2");
+        heading2.add(getResources().getString(R.string.submenu2));
+        heading2.add(getResources().getString(R.string.submenu2));
+        heading2.add(getResources().getString(R.string.submenu2));
 
         List<String> heading3 = new ArrayList<String>();
-        heading3.add("Submenu of item 3");
+        heading3.add(getResources().getString(R.string.submenu3));
 
         listDataChild.put(listDataHeader.get(0), heading1);// Header, Child data
         listDataChild.put(listDataHeader.get(1), heading2);

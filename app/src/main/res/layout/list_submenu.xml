@@ -11,5 +11,5 @@
         android:layout_marginLeft="50dp"
         android:padding="10dp"
         android:textColor="@color/menuItemTextColor"
-        android:textSize="18dp"/>
+        android:textSize="14dp"/>
 </LinearLayout>
