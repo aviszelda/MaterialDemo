@@ -9,6 +9,11 @@ import android.util.Log;
 import android.view.Menu;
 import android.view.MenuItem;
 import android.view.View;
+import android.view.animation.AlphaAnimation;
+import android.view.animation.Animation;
+import android.view.animation.AnimationSet;
+import android.view.animation.LayoutAnimationController;
+import android.view.animation.ScaleAnimation;
 import android.widget.ExpandableListView;
 import android.widget.Toast;
 import com.mobtion.materialdemo.MainAbsFragmentActivity;
@@ -81,12 +86,18 @@ public class MainMenuActivity extends MainAbsFragmentActivity {
                     mDrawerLayout.closeDrawers();
                 }
 
+                if (i == 2 && i1 == 0 && l == 0) {
+                    Toast.makeText(MainMenuActivity.this, "no hay fragment para este", Toast.LENGTH_SHORT).show();
+                    mDrawerLayout.closeDrawers();
+                }
+
                 return false;
             }
         });
         expandableList.setOnGroupClickListener(new ExpandableListView.OnGroupClickListener() {
             @Override
             public boolean onGroupClick(ExpandableListView expandableListView, View view, int i, long l) {
+
                 Log.d("DEBUG", "heading clicked");
                 Log.d("DEBUG", "heading int i " + i);
                 Log.d("DEBUG", "heading long " + l);
@@ -98,11 +109,21 @@ public class MainMenuActivity extends MainAbsFragmentActivity {
 
             @Override
             public void onGroupExpand(int groupPosition) {
-                if (lastExpandedPosition != -1
-                        && groupPosition != lastExpandedPosition) {
-                    expandableList.collapseGroup(lastExpandedPosition);
+//                if (lastExpandedPosition != -1
+//                        && groupPosition != lastExpandedPosition) {
+//                    expandableList.collapseGroup(lastExpandedPosition);
+//                }
+//                lastExpandedPosition = groupPosition;
+
+                //setupLayoutAnimation();
+
+                Log.i("ultimo seleccionado ", String.valueOf(groupPosition));
+
+                for(int i=0; i<mMenuAdapter.getGroupCount(); i++) {
+                    if(i != groupPosition) {
+                        expandableList.collapseGroup(i);
+                    }
                 }
-                lastExpandedPosition = groupPosition;
             }
         });
 
@@ -164,32 +185,34 @@ public class MainMenuActivity extends MainAbsFragmentActivity {
         listDataChild = new HashMap<ExpandedMenuModel, List<String>>();
 
         ExpandedMenuModel item1 = new ExpandedMenuModel();
-        item1.setIconName("heading1");
-        item1.setIconImg(android.R.drawable.ic_delete);
+        item1.setIconName(getResources().getString(R.string.menu_header1));
+        item1.setIconImg(R.drawable.ic_menu_item);
         // Adding data header
         listDataHeader.add(item1);
 
         ExpandedMenuModel item2 = new ExpandedMenuModel();
-        item2.setIconName("heading2");
-        item2.setIconImg(android.R.drawable.ic_delete);
+        item2.setIconName(getResources().getString(R.string.menu_header2));
+        item2.setIconImg(R.drawable.ic_menu_item);
         listDataHeader.add(item2);
 
+
         ExpandedMenuModel item3 = new ExpandedMenuModel();
-        item3.setIconName("heading3");
-        item3.setIconImg(android.R.drawable.ic_delete);
+        item3.setIconName(getResources().getString(R.string.menu_header3));
+        item3.setIconImg(R.drawable.ic_menu_item);
         listDataHeader.add(item3);
+
 
         // Adding child data
         List<String> heading1 = new ArrayList<String>();
-        heading1.add("Submenu of item 1");
+        heading1.add(getResources().getString(R.string.submenu1));
 
         List<String> heading2 = new ArrayList<String>();
-        heading2.add("Submenu of item 2");
-        heading2.add("Submenu of item 2");
-        heading2.add("Submenu of item 2");
+        heading2.add(getResources().getString(R.string.submenu2));
+        heading2.add(getResources().getString(R.string.submenu2));
+        heading2.add(getResources().getString(R.string.submenu2));
 
         List<String> heading3 = new ArrayList<String>();
-        heading3.add("Submenu of item 3");
+        heading3.add(getResources().getString(R.string.submenu3));
 
         listDataChild.put(listDataHeader.get(0), heading1);// Header, Child data
         listDataChild.put(listDataHeader.get(1), heading2);
@@ -223,6 +246,21 @@ public class MainMenuActivity extends MainAbsFragmentActivity {
                 }
             });
     */
+    }
+
+    private void setupLayoutAnimation() {
+        AnimationSet set = new AnimationSet(true);
+        Animation animation = new AlphaAnimation(0.0f, 1.0f);
+        animation.setDuration(50);
+        set.addAnimation(animation);
+
+        animation = new ScaleAnimation(1.0f, 1.0f, 0.0f, 1.0f, 0.5f, 1.0f);
+        animation.setDuration(50);
+        set.addAnimation(animation);
+
+        LayoutAnimationController controller = new LayoutAnimationController(set, 0.75f);
+        expandableList.setLayoutAnimationListener(null);
+        expandableList.setLayoutAnimation(controller);
     }
 
     public void setUpToolbar(boolean displayHome, int resource) {

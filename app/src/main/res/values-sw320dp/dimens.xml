@@ -1,0 +1,10 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <dimen name="banner_login">400px</dimen>
+    <dimen name="banner_login_marginTop">50px</dimen>
+    <dimen name="button_login">250dp</dimen>
+    <dimen name="button_login_marginTop">200px</dimen>
+    <dimen name="editTextName_login_marginTop">180dp</dimen>
+    <dimen name="editTextPassword_login_marginTop">250dp</dimen>
+    <dimen name="registerLabel_marginBottom">40dp</dimen>
+</resources>

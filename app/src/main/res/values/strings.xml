@@ -5,11 +5,18 @@
     <string name="email">Correo</string>
     <string name="password">Contraseña</string>
     <string name="login">Ingresar</string>
+    <string name="change_password">Cambiar/Recuperar Contraseña</string>
     <string name="menu_option_search">Buscar</string>
     <string name="menu_option_add">Agregar</string>
     <string name="menu_option_delete">Borrar</string>
     <string name="navigation_drawer_open">Open navigation drawer</string>
     <string name="navigation_drawer_close">Close navigation drawer</string>
+    <string name="menu_header1">Encabezado 1</string>
+    <string name="menu_header2">Encabezado 2</string>
+    <string name="menu_header3">Encabezado 3</string>
+    <string name="submenu1">Submenu of item 1</string>
+    <string name="submenu2">Submenu of item 2</string>
+    <string name="submenu3">Submenu of item 3</string>
 
     <!-- TODO: Remove or change this placeholder text -->
     <string name="product_fragment">Hello product fragment</string>
@@ -19,4 +26,7 @@
 
     <!-- TODO: Remove or change this placeholder text -->
     <string name="report_fragment">Hello report fragment</string>
+
+    <!-- TODO: Remove or change this placeholder text -->
+    <string name="hello_change_password_fragment">Hello blank fragment</string>
 </resources>
