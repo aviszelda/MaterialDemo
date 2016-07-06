@@ -27,6 +27,7 @@ import java.util.List;
 
 public class MainMenuActivity extends MainAbsFragmentActivity {
 
+    public Toolbar toolbar;
     private DrawerLayout mDrawerLayout;
     private int lastExpandedPosition = -1;
     ExpandableListAdapter mMenuAdapter;
@@ -39,7 +40,7 @@ public class MainMenuActivity extends MainAbsFragmentActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main_menu);
 
-        Toolbar toolbar = (Toolbar) findViewById(R.id.toolbar);
+        toolbar = (Toolbar) findViewById(R.id.toolbar);
         setSupportActionBar(toolbar);
 
         setUpToolbar(true, R.drawable.ic_drawer);
