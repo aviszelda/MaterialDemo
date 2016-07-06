@@ -1,16 +1,11 @@
-package com.mobtion.materialdemo.com.mobtion.materialdemo.listener.partone;
+package com.mobtion.materialdemo.com.mobtion.materialdemo.listener;
 
 /**
- * Created by agvenegas on 7/5/16.
+ * Created by agvenegas on 7/6/16.
  */
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
 
-/*
-* This class is a ScrollListener for RecyclerView that allows to show/hide
-* views when list is scrolled. It assumes that you have added a header
-* to your list. @see pl.michalz.hideonscrollexample.adapter.partone.RecyclerAdapter
-* */
 public abstract class HidingScrollListenerOne extends RecyclerView.OnScrollListener {
 
     private static final int HIDE_THRESHOLD = 20;
