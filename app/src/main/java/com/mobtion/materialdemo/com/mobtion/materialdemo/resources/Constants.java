@@ -1,7 +1,5 @@
 package com.mobtion.materialdemo.com.mobtion.materialdemo.resources;
 
-import android.graphics.Bitmap;
-
 /**
  * Created by agvenegas on 7/6/16.
  */

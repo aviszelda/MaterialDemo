@@ -19,6 +19,9 @@ import com.mobtion.materialdemo.com.mobtion.materialdemo.resources.Constants;
 import com.mobtion.materialdemo.com.mobtion.materialdemo.resources.ImageItem;
 import com.mobtion.materialdemo.com.mobtion.materialdemo.resources.SessionInfo;
 
+import java.text.DateFormat;
+import java.util.Date;
+
 /**
  * A simple {@link Fragment} subclass.
  */
@@ -29,6 +32,7 @@ public class ProductFragment extends MainAbsFragment {
     private String mTitle;
     private ImageView mImageView;
     protected SessionInfo session = null;
+    private String currentDateTimeString = null;
 
     public ProductFragment() {
         // Required empty public constructor
@@ -67,7 +71,9 @@ public class ProductFragment extends MainAbsFragment {
             Bundle extras = data.getExtras();
             mImageBitmap = (Bitmap) extras.get("data");
 
-            ImageItem imageItem = new ImageItem(mImageBitmap, "imagen ");
+            currentDateTimeString = DateFormat.getDateTimeInstance().format(new Date());
+
+            ImageItem imageItem = new ImageItem(mImageBitmap, currentDateTimeString);
             session.getImageItem().add(imageItem);
 
             ((MainAbsFragmentActivity)getActivity()).startNewFragment(new ReportFragment());
