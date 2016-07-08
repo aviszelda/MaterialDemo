@@ -30,8 +30,7 @@ public class ReportDetailFragment extends MainAbsFragment {
 
 
     @Override
-    public View onCreateView(LayoutInflater inflater, ViewGroup container,
-                             Bundle savedInstanceState) {
+    public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
         // Inflate the layout for this fragment
         View view = inflater.inflate(R.layout.report_detail_fragment, container, false);
         session = SessionInfo.getInstance();
