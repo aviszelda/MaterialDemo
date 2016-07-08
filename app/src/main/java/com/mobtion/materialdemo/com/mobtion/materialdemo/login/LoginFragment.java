@@ -15,7 +15,6 @@ import android.widget.Button;
 import android.widget.EditText;
 import android.widget.TextView;
 import android.widget.Toast;
-
 import com.mobtion.materialdemo.MainAbsFragment;
 import com.mobtion.materialdemo.MainAbsFragmentActivity;
 import com.mobtion.materialdemo.R;
