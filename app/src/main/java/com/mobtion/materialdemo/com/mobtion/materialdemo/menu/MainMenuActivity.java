@@ -1,5 +1,7 @@
 package com.mobtion.materialdemo.com.mobtion.materialdemo.menu;
 
+import android.content.Intent;
+import android.graphics.Bitmap;
 import android.os.Bundle;
 import android.support.design.widget.NavigationView;
 import android.support.v4.view.GravityCompat;
@@ -20,6 +22,7 @@ import com.mobtion.materialdemo.MainAbsFragmentActivity;
 import com.mobtion.materialdemo.R;
 import com.mobtion.materialdemo.com.mobtion.materialdemo.product.ProductFragment;
 import com.mobtion.materialdemo.com.mobtion.materialdemo.report.ReportFragment;
+import com.mobtion.materialdemo.com.mobtion.materialdemo.resources.ImageItem;
 import com.mobtion.materialdemo.com.mobtion.materialdemo.search.SearchFragment;
 import java.util.ArrayList;
 import java.util.HashMap;

@@ -11,12 +11,13 @@ import android.view.View;
 import android.view.ViewGroup;
 import android.widget.Button;
 import android.widget.ImageView;
-
 import com.mobtion.materialdemo.MainAbsFragment;
 import com.mobtion.materialdemo.MainAbsFragmentActivity;
 import com.mobtion.materialdemo.R;
 import com.mobtion.materialdemo.com.mobtion.materialdemo.report.ReportFragment;
 import com.mobtion.materialdemo.com.mobtion.materialdemo.resources.Constants;
+import com.mobtion.materialdemo.com.mobtion.materialdemo.resources.ImageItem;
+import com.mobtion.materialdemo.com.mobtion.materialdemo.resources.SessionInfo;
 
 /**
  * A simple {@link Fragment} subclass.
@@ -25,7 +26,9 @@ public class ProductFragment extends MainAbsFragment {
 
     private Button cameraButton;
     private Bitmap mImageBitmap;
+    private String mTitle;
     private ImageView mImageView;
+    protected SessionInfo session = null;
 
     public ProductFragment() {
         // Required empty public constructor
@@ -35,6 +38,8 @@ public class ProductFragment extends MainAbsFragment {
     public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
         // Inflate the layout for this fragment
         View view = inflater.inflate(R.layout.product_fragment, container, false);
+
+        session = SessionInfo.getInstance();
 
         cameraButton = (Button) view.findViewById(R.id.cameraButton);
         mImageView = (ImageView) view.findViewById(R.id.photoImage);
@@ -49,13 +54,6 @@ public class ProductFragment extends MainAbsFragment {
         return view;
     }
 
-//    private void handleSmallCameraPhoto(Intent intent) {
-//        Bundle extras = intent.getExtras();
-//        mImageBitmap = (Bitmap) extras.get("data");
-//        mImageView.setImageBitmap(mImageBitmap);
-//        mImageView.setVisibility(View.VISIBLE);
-//    }
-
     private void dispatchTakePictureIntent() {
         Intent takePictureIntent = new Intent(MediaStore.ACTION_IMAGE_CAPTURE);
         if (takePictureIntent.resolveActivity(getActivity().getPackageManager()) != null) {
@@ -68,8 +66,10 @@ public class ProductFragment extends MainAbsFragment {
         if (requestCode == Constants.REQUEST_IMAGE_CAPTURE && resultCode == Constants.RESULT_OK) {
             Bundle extras = data.getExtras();
             mImageBitmap = (Bitmap) extras.get("data");
-            mImageView.setImageBitmap(mImageBitmap);
-            mImageView.setVisibility(View.VISIBLE);
+
+            ImageItem imageItem = new ImageItem(mImageBitmap, "imagen ");
+            session.getImageItem().add(imageItem);
+
             ((MainAbsFragmentActivity)getActivity()).startNewFragment(new ReportFragment());
         }
     }

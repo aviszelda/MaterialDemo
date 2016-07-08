@@ -3,31 +3,26 @@ package com.mobtion.materialdemo.com.mobtion.materialdemo.resources;
 import android.graphics.Bitmap;
 
 /**
- * Created by agvenegas on 7/6/16.
+ * Created by agvenegas on 12/28/15.
  */
 public class ImageItem {
-    private Bitmap image;
-    private String title;
 
-    public ImageItem(Bitmap image, String title) {
+    public ImageItem() {
+        this.setImage(null);
+        this.setTitle(null);
+    }
+
+    public ImageItem (Bitmap image, String title) {
         super();
-        this.image = image;
-        this.title = title;
+        this.setImage(image);
+        this.setTitle(title);
     }
 
-    public Bitmap getImage() {
-        return image;
-    }
+    private Bitmap image;
+    public Bitmap getImage() { return image; }
+    public void setImage(Bitmap value) { this.image = value; }
 
-    public void setImage(Bitmap image) {
-        this.image = image;
-    }
-
-    public String getTitle() {
-        return title;
-    }
-
-    public void setTitle(String title) {
-        this.title = title;
-    }
+    private String title;
+    public String getTitle() { return title; }
+    public void setTitle(String value) { this.title = (value != null) ? value : Constants.EMPTY_STRING; }
 }

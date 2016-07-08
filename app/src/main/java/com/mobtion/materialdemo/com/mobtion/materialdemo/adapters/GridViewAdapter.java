@@ -1,6 +1,5 @@
 package com.mobtion.materialdemo.com.mobtion.materialdemo.adapters;
 
-import android.app.Activity;
 import android.content.Context;
 import android.view.LayoutInflater;
 import android.view.View;
@@ -12,45 +11,36 @@ import com.mobtion.materialdemo.R;
 import com.mobtion.materialdemo.com.mobtion.materialdemo.resources.ImageItem;
 import java.util.ArrayList;
 
-/**
- * Created by agvenegas on 7/6/16.
- */
-public class GridViewAdapter extends ArrayAdapter {
-    private Context context;
-    private int layoutResourceId;
-    private ArrayList data = new ArrayList();
+public class GridViewAdapter extends ArrayAdapter<ImageItem>{
 
-    public GridViewAdapter(Context context, int layoutResourceId, ArrayList data) {
-        super(context, layoutResourceId, data);
-        this.layoutResourceId = layoutResourceId;
-        this.context = context;
-        this.data = data;
+    public GridViewAdapter(Context context, ArrayList<ImageItem> imageItem) {
+        super(context, 0, imageItem);
     }
 
     @Override
-    public View getView(int position, View convertView, ViewGroup parent) {
-        View row = convertView;
-        ViewHolder holder = null;
-
-        if (row == null) {
-            LayoutInflater inflater = ((Activity) context).getLayoutInflater();
-            row = inflater.inflate(layoutResourceId, parent, false);
-            holder = new ViewHolder();
-            holder.imageTitle = (TextView) row.findViewById(R.id.text);
-            holder.image = (ImageView) row.findViewById(R.id.image);
-            row.setTag(holder);
-        } else {
-            holder = (ViewHolder) row.getTag();
+    public View getView (int position, View convertView, ViewGroup parent) {
+        // Check if an existing view is being reused, otherwise inflate the view
+        if (convertView == null) {
+            convertView = LayoutInflater.from(getContext()).inflate(R.layout.grid_item_layout, parent, false);
         }
+        // Get the data item for this position
+        ImageItem imageItem = getItem(position);
 
-        ImageItem item = (ImageItem) data.get(position);
-        holder.imageTitle.setText(item.getTitle());
-        holder.image.setImageBitmap(item.getImage());
-        return row;
-    }
+        if (imageItem != null) {
 
-    static class ViewHolder {
-        TextView imageTitle;
-        ImageView image;
+            // Lookup view for data population
+            ImageView image = (ImageView) convertView.findViewById(R.id.image);
+            TextView title = (TextView) convertView.findViewById(R.id.text);
+
+            // Populate the data into the template view using the data object
+            if (image != null) {
+                image.setImageBitmap(imageItem.getImage());
+            }
+            if (title != null) {
+                title.setText(imageItem.getTitle());
+            }
+        }
+        // Return the completed view to render on screen
+        return convertView;
     }
 }
