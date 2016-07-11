@@ -17,6 +17,7 @@
     <string name="submenu1">Submenu of item 1</string>
     <string name="submenu2">Submenu of item 2</string>
     <string name="submenu3">Submenu of item 3</string>
+    <string name="user_no_write_permission">"The app was not allowed to write to your storage. Hence, it cannot function properly. Please consider granting it this permission"</string>
 
     <!-- TODO: Remove or change this placeholder text -->
     <string name="product_fragment">Hello product fragment</string>
