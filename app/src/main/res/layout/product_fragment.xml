@@ -12,7 +12,7 @@
         android:drawableTop="@drawable/ic_camera" />
 
     <ImageView
-        android:id="@+id/photoImage"
+        android:id="@+id/img"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:layout_below="@+id/cameraButton"/>

@@ -11,7 +11,7 @@ import com.mobtion.materialdemo.R;
 import com.mobtion.materialdemo.com.mobtion.materialdemo.resources.ImageItem;
 import java.util.ArrayList;
 
-public class GridViewAdapter extends ArrayAdapter<ImageItem>{
+public class GridViewAdapter extends ArrayAdapter<ImageItem> {
 
     public GridViewAdapter(Context context, ArrayList<ImageItem> imageItem) {
         super(context, 0, imageItem);
