@@ -6,8 +6,10 @@ import android.content.res.Resources;
 import android.graphics.Bitmap;
 import android.graphics.BitmapFactory;
 import android.graphics.Canvas;
+import android.graphics.Color;
 import android.graphics.Matrix;
 import android.graphics.Paint;
+import android.graphics.Rect;
 import android.graphics.RectF;
 import android.net.Uri;
 import android.os.Bundle;
@@ -174,6 +176,20 @@ public class ProductFragment extends MainAbsFragment {
 
                         mImageBitmap = addWatermark(getResources(), mImageBitmap);
 
+                        String gText = "ejemplo";
+                        //float scale = getResources().getDisplayMetrics().density;
+                        Canvas canvas = new Canvas(mImageBitmap);
+                        Paint paint = new Paint(Paint.ANTI_ALIAS_FLAG);
+                        paint.setColor(Color.YELLOW);
+                        paint.setTextSize(300);
+                        //paint.setShadowLayer(1f, 0f, 1f, Color.WHITE);
+                        // draw text to the Canvas center
+                        Rect bounds = new Rect();
+                        paint.getTextBounds(gText, 0, gText.length(), bounds);
+                        int x = (mImageBitmap.getWidth() - bounds.width())/2 - bounds.width()+20;
+                        int y = (mImageBitmap.getHeight() + bounds.height())/2;
+                        canvas.drawText(gText, x, 150, paint);
+
                         mImageBitmap.compress(Bitmap.CompressFormat.JPEG, 50, outFile);
 
                         outFile.flush();
@@ -212,7 +228,7 @@ public class ProductFragment extends MainAbsFragment {
         c = new Canvas(bmp);
         c.drawBitmap(source, 0, 0, paint);
 
-        watermark = BitmapFactory.decodeResource(res, R.drawable.watermark_example);
+        watermark = BitmapFactory.decodeResource(res, R.drawable.avira_logo);
         scale = (float) (((float) h * 0.10) / (float) watermark.getHeight());
 
         matrix = new Matrix();
