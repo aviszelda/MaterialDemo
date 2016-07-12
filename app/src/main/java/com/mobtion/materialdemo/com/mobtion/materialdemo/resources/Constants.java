@@ -10,5 +10,6 @@ public interface Constants {
     String EMPTY_STRING = "";
     static final int CAPTURE_IMAGE_ACTIVITY_REQUEST_CODE = 0;
     static final int REQUEST_WRITE_STORAGE = 112;
+    String LOG_TAG = "LOG";
 
 }

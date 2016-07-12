@@ -93,7 +93,13 @@ public class ProductFragment extends MainAbsFragment {
             if (requestCode == 1) {
                 try {
 
-                    String path = Environment.getExternalStorageDirectory() + File.separator + "DCIM";
+                    String path = Environment.getExternalStoragePublicDirectory(Environment.DIRECTORY_PICTURES) + "/Crediexpress/";
+
+                    File newDir = new File(path);
+
+                    if(!newDir.exists()){
+                        newDir.mkdirs();
+                    }
 
                     File file = new File(path, String.valueOf(System.currentTimeMillis()) + ".jpg");
 
