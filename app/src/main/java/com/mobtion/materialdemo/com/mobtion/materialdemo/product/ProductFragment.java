@@ -1,7 +1,6 @@
 package com.mobtion.materialdemo.com.mobtion.materialdemo.product;
 
 
-import android.content.Context;
 import android.content.Intent;
 import android.content.res.Resources;
 import android.graphics.Bitmap;
@@ -10,16 +9,18 @@ import android.graphics.Canvas;
 import android.graphics.Matrix;
 import android.graphics.Paint;
 import android.graphics.RectF;
+import android.net.Uri;
 import android.os.Bundle;
 import android.os.Environment;
 import android.provider.MediaStore;
 import android.support.v4.app.Fragment;
-import android.text.format.Time;
+import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.Button;
 import android.widget.ImageView;
+
 import com.mobtion.materialdemo.MainAbsFragment;
 import com.mobtion.materialdemo.MainAbsFragmentActivity;
 import com.mobtion.materialdemo.R;
@@ -27,13 +28,13 @@ import com.mobtion.materialdemo.com.mobtion.materialdemo.report.ReportFragment;
 import com.mobtion.materialdemo.com.mobtion.materialdemo.resources.Constants;
 import com.mobtion.materialdemo.com.mobtion.materialdemo.resources.ImageItem;
 import com.mobtion.materialdemo.com.mobtion.materialdemo.resources.SessionInfo;
+
 import java.io.File;
 import java.io.FileNotFoundException;
 import java.io.FileOutputStream;
 import java.io.IOException;
 import java.io.OutputStream;
 import java.text.DateFormat;
-import java.util.Calendar;
 import java.util.Date;
 
 /**
@@ -47,6 +48,9 @@ public class ProductFragment extends MainAbsFragment {
     private String currentDateTimeString = null;
     private OutputStream outFile = null;
 
+    private ImageView imageView;
+    private String mCurrentPhotoPath;
+
     public ProductFragment() {
         // Required empty public constructor
     }
@@ -59,39 +63,101 @@ public class ProductFragment extends MainAbsFragment {
         session = SessionInfo.getInstance();
 
         cameraButton = (Button) view.findViewById(R.id.cameraButton);
+        imageView = (ImageView) view.findViewById(R.id.imageView);
 
         cameraButton.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                dispatchTakePictureIntent();
+                //dispatchTakePictureIntent();
+
+                Intent cameraIntent = new Intent(MediaStore.ACTION_IMAGE_CAPTURE);
+                if (cameraIntent.resolveActivity(getActivity().getPackageManager()) != null) {
+                    // Create the File where the photo should go
+                    File photoFile = null;
+                    try {
+                        photoFile = createImageFile();
+                    } catch (IOException ex) {
+                        // Error occurred while creating the File
+                        Log.i(Constants.TAG, "IOException");
+                    }
+                    // Continue only if the File was successfully created
+                    if (photoFile != null) {
+                        cameraIntent.putExtra(MediaStore.EXTRA_OUTPUT, Uri.fromFile(photoFile));
+                        startActivityForResult(cameraIntent, Constants.REQUEST_IMAGE_CAPTURE);
+                    }
+                }
             }
         });
 
         return view;
     }
 
-    private void dispatchTakePictureIntent() {
-        Intent takePictureIntent = new Intent(MediaStore.ACTION_IMAGE_CAPTURE);
-        if (takePictureIntent.resolveActivity(getActivity().getPackageManager()) != null) {
-            startActivityForResult(takePictureIntent, Constants.REQUEST_IMAGE_CAPTURE);
+    private File createImageFile() throws IOException {
+        // Create an image file name
+        String timeStamp = "temp";
+        String imageFileName = timeStamp + "_";
+        String tempPath = Environment.getExternalStoragePublicDirectory(Environment.DIRECTORY_PICTURES) + "/Temp/";
+
+        File storageDir = new File(tempPath);
+
+        if(!storageDir.exists()){
+            storageDir.mkdirs();
         }
+
+        File image = File.createTempFile(
+                imageFileName,  // prefix
+                ".jpg",         // suffix
+                storageDir      // directory
+        );
+
+        // Save a file: path for use with ACTION_VIEW intents
+        mCurrentPhotoPath = "file:" + image.getAbsolutePath();
+        return image;
     }
+
+//    private void dispatchTakePictureIntent() {
+//        Intent takePictureIntent = new Intent(MediaStore.ACTION_IMAGE_CAPTURE);
+//        if (takePictureIntent.resolveActivity(getActivity().getPackageManager()) != null) {
+//            startActivityForResult(takePictureIntent, Constants.REQUEST_IMAGE_CAPTURE);
+//        }
+//    }
 
     @Override
     public void onActivityResult(int requestCode, int resultCode, Intent data) {
+
         if (requestCode == Constants.REQUEST_IMAGE_CAPTURE && resultCode == Constants.RESULT_OK) {
-            Bundle extras = data.getExtras();
-            mImageBitmap = (Bitmap) extras.get("data");
+            try {
+                mImageBitmap = MediaStore.Images.Media.getBitmap(getActivity().getContentResolver(), Uri.parse(mCurrentPhotoPath));
 
-            currentDateTimeString = DateFormat.getDateTimeInstance().format(new Date());
+                currentDateTimeString = DateFormat.getDateTimeInstance().format(new Date());
 
-            ImageItem imageItem = new ImageItem(mImageBitmap, currentDateTimeString);
-            session.getImageItem().add(imageItem);
+                ImageItem imageItem = new ImageItem(mImageBitmap, currentDateTimeString);
+                session.getImageItem().add(imageItem);
 
-            ((MainAbsFragmentActivity)getActivity()).startNewFragment(new ReportFragment());
+                ((MainAbsFragmentActivity)getActivity()).startNewFragment(new ReportFragment());
+
+            } catch (IOException e) {
+                e.printStackTrace();
+            }
+        }
+
+//        if (requestCode == Constants.REQUEST_IMAGE_CAPTURE && resultCode == Constants.RESULT_OK) {
+//            Bundle extras = data.getExtras();
+//            mImageBitmap = (Bitmap) extras.get("data");
 
             if (requestCode == 1) {
                 try {
+
+                    String tempPath = Environment.getExternalStoragePublicDirectory(Environment.DIRECTORY_PICTURES) + "/Temp/";
+                    File dir = new File(tempPath);
+                    if (dir.isDirectory())
+                    {
+                        String[] children = dir.list();
+                        for (int i = 0; i < children.length; i++)
+                        {
+                            new File(dir, children[i]).delete();
+                        }
+                    }
 
                     String path = Environment.getExternalStoragePublicDirectory(Environment.DIRECTORY_PICTURES) + "/Crediexpress/";
 
@@ -108,7 +174,7 @@ public class ProductFragment extends MainAbsFragment {
 
                         mImageBitmap = addWatermark(getResources(), mImageBitmap);
 
-                        mImageBitmap.compress(Bitmap.CompressFormat.PNG, 100, outFile);
+                        mImageBitmap.compress(Bitmap.CompressFormat.JPEG, 50, outFile);
 
                         outFile.flush();
                         outFile.close();
@@ -123,7 +189,7 @@ public class ProductFragment extends MainAbsFragment {
                     e.printStackTrace();
                 }
             }
-        }
+//        }
     }
 
     public static Bitmap addWatermark(Resources res, Bitmap source) {
