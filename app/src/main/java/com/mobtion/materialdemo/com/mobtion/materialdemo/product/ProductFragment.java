@@ -54,6 +54,7 @@ public class ProductFragment extends MainAbsFragment {
     private ImageView imageView;
     private String mCurrentPhotoPath;
     private String newPhotoPath;
+    private String photoName;
 
     private ProgressDialog progressDialog;
 
@@ -154,7 +155,9 @@ public class ProductFragment extends MainAbsFragment {
                     newDir.mkdirs();
                 }
 
-                File file = new File(path, String.valueOf(System.currentTimeMillis()) + ".jpg");
+                photoName = String.valueOf(System.currentTimeMillis()) + ".jpg";
+
+                File file = new File(path, photoName);
 
                 newPhotoPath = "file:" + String.valueOf(file);
 
@@ -187,7 +190,7 @@ public class ProductFragment extends MainAbsFragment {
 
                     mImageBitmap = MediaStore.Images.Media.getBitmap(getActivity().getContentResolver(), Uri.parse(newPhotoPath));
 
-                    ImageItem imageItem = new ImageItem(mImageBitmap, currentDateTimeString);
+                    ImageItem imageItem = new ImageItem(mImageBitmap, currentDateTimeString, photoName);
                     session.getImageItem().add(imageItem);
 
                     ((MainAbsFragmentActivity)getActivity()).startNewFragment(new ReportFragment());

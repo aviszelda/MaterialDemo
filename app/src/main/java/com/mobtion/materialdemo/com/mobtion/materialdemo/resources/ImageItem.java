@@ -10,12 +10,14 @@ public class ImageItem {
     public ImageItem() {
         this.setImage(null);
         this.setTitle(null);
+        this.setName(null);
     }
 
-    public ImageItem (Bitmap image, String title) {
+    public ImageItem (Bitmap image, String title, String name) {
         super();
         this.setImage(image);
         this.setTitle(title);
+        this.setName(name);
     }
 
     private Bitmap image;
@@ -25,4 +27,8 @@ public class ImageItem {
     private String title;
     public String getTitle() { return title; }
     public void setTitle(String value) { this.title = (value != null) ? value : Constants.EMPTY_STRING; }
+
+    private String name;
+    public String getName() { return name; }
+    public void setName(String value) { this.name = (value != null) ? value : Constants.EMPTY_STRING; }
 }
