@@ -52,6 +52,7 @@ public class ProductFragment extends MainAbsFragment {
 
     private ImageView imageView;
     private String mCurrentPhotoPath;
+    private String newPhotoPath;
 
     public ProductFragment() {
         // Required empty public constructor
@@ -128,15 +129,76 @@ public class ProductFragment extends MainAbsFragment {
     public void onActivityResult(int requestCode, int resultCode, Intent data) {
 
         if (requestCode == Constants.REQUEST_IMAGE_CAPTURE && resultCode == Constants.RESULT_OK) {
+
             try {
+
                 mImageBitmap = MediaStore.Images.Media.getBitmap(getActivity().getContentResolver(), Uri.parse(mCurrentPhotoPath));
 
-                currentDateTimeString = DateFormat.getDateTimeInstance().format(new Date());
+                String tempPath = Environment.getExternalStoragePublicDirectory(Environment.DIRECTORY_PICTURES) + "/Temp/";
+                File dir = new File(tempPath);
+                if (dir.isDirectory())
+                {
+                    String[] children = dir.list();
+                    for (int i = 0; i < children.length; i++)
+                    {
+                        new File(dir, children[i]).delete();
+                    }
+                }
 
-                ImageItem imageItem = new ImageItem(mImageBitmap, currentDateTimeString);
-                session.getImageItem().add(imageItem);
+                String path = Environment.getExternalStoragePublicDirectory(Environment.DIRECTORY_PICTURES) + "/Crediexpress/";
 
-                ((MainAbsFragmentActivity)getActivity()).startNewFragment(new ReportFragment());
+                File newDir = new File(path);
+
+                if(!newDir.exists()){
+                    newDir.mkdirs();
+                }
+
+                File file = new File(path, String.valueOf(System.currentTimeMillis()) + ".jpg");
+
+                newPhotoPath = "file:" + String.valueOf(file);
+
+                try {
+                    outFile = new FileOutputStream(file);
+
+                    mImageBitmap = addWatermark(getResources(), mImageBitmap);
+
+                    String gText = "ejemplo";
+                    //float scale = getResources().getDisplayMetrics().density;
+                    Canvas canvas = new Canvas(mImageBitmap);
+                    Paint paint = new Paint(Paint.ANTI_ALIAS_FLAG);
+                    paint.setColor(Color.YELLOW);
+                    paint.setTextSize(300);
+                    //paint.setShadowLayer(1f, 0f, 1f, Color.WHITE);
+                    // draw text to the Canvas center
+                    Rect bounds = new Rect();
+                    paint.getTextBounds(gText, 0, gText.length(), bounds);
+                    int x = (mImageBitmap.getWidth() - bounds.width())/2 - bounds.width()+20;
+                    int y = (mImageBitmap.getHeight() + bounds.height())/2;
+                    canvas.drawText(gText, x, 150, paint);
+
+                    mImageBitmap.compress(Bitmap.CompressFormat.JPEG, 50, outFile);
+
+                    outFile.flush();
+                    outFile.close();
+
+
+                    currentDateTimeString = DateFormat.getDateTimeInstance().format(new Date());
+
+                    mImageBitmap = MediaStore.Images.Media.getBitmap(getActivity().getContentResolver(), Uri.parse(newPhotoPath));
+
+                    ImageItem imageItem = new ImageItem(mImageBitmap, currentDateTimeString);
+                    session.getImageItem().add(imageItem);
+
+                    ((MainAbsFragmentActivity)getActivity()).startNewFragment(new ReportFragment());
+
+
+                } catch (FileNotFoundException e) {
+                    e.printStackTrace();
+                } catch (IOException e) {
+                    e.printStackTrace();
+                } catch (Exception e) {
+                    e.printStackTrace();
+                }
 
             } catch (IOException e) {
                 e.printStackTrace();
@@ -146,65 +208,6 @@ public class ProductFragment extends MainAbsFragment {
 //        if (requestCode == Constants.REQUEST_IMAGE_CAPTURE && resultCode == Constants.RESULT_OK) {
 //            Bundle extras = data.getExtras();
 //            mImageBitmap = (Bitmap) extras.get("data");
-
-            if (requestCode == 1) {
-                try {
-
-                    String tempPath = Environment.getExternalStoragePublicDirectory(Environment.DIRECTORY_PICTURES) + "/Temp/";
-                    File dir = new File(tempPath);
-                    if (dir.isDirectory())
-                    {
-                        String[] children = dir.list();
-                        for (int i = 0; i < children.length; i++)
-                        {
-                            new File(dir, children[i]).delete();
-                        }
-                    }
-
-                    String path = Environment.getExternalStoragePublicDirectory(Environment.DIRECTORY_PICTURES) + "/Crediexpress/";
-
-                    File newDir = new File(path);
-
-                    if(!newDir.exists()){
-                        newDir.mkdirs();
-                    }
-
-                    File file = new File(path, String.valueOf(System.currentTimeMillis()) + ".jpg");
-
-                    try {
-                        outFile = new FileOutputStream(file);
-
-                        mImageBitmap = addWatermark(getResources(), mImageBitmap);
-
-                        String gText = "ejemplo";
-                        //float scale = getResources().getDisplayMetrics().density;
-                        Canvas canvas = new Canvas(mImageBitmap);
-                        Paint paint = new Paint(Paint.ANTI_ALIAS_FLAG);
-                        paint.setColor(Color.YELLOW);
-                        paint.setTextSize(300);
-                        //paint.setShadowLayer(1f, 0f, 1f, Color.WHITE);
-                        // draw text to the Canvas center
-                        Rect bounds = new Rect();
-                        paint.getTextBounds(gText, 0, gText.length(), bounds);
-                        int x = (mImageBitmap.getWidth() - bounds.width())/2 - bounds.width()+20;
-                        int y = (mImageBitmap.getHeight() + bounds.height())/2;
-                        canvas.drawText(gText, x, 150, paint);
-
-                        mImageBitmap.compress(Bitmap.CompressFormat.JPEG, 50, outFile);
-
-                        outFile.flush();
-                        outFile.close();
-                    } catch (FileNotFoundException e) {
-                        e.printStackTrace();
-                    } catch (IOException e) {
-                        e.printStackTrace();
-                    } catch (Exception e) {
-                        e.printStackTrace();
-                    }
-                } catch (Exception e) {
-                    e.printStackTrace();
-                }
-            }
 //        }
     }
 
