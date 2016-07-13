@@ -1,6 +1,7 @@
 package com.mobtion.materialdemo.com.mobtion.materialdemo.product;
 
 
+import android.app.ProgressDialog;
 import android.content.Intent;
 import android.content.res.Resources;
 import android.graphics.Bitmap;
@@ -53,6 +54,8 @@ public class ProductFragment extends MainAbsFragment {
     private ImageView imageView;
     private String mCurrentPhotoPath;
     private String newPhotoPath;
+
+    private ProgressDialog progressDialog;
 
     public ProductFragment() {
         // Required empty public constructor
@@ -136,11 +139,9 @@ public class ProductFragment extends MainAbsFragment {
 
                 String tempPath = Environment.getExternalStoragePublicDirectory(Environment.DIRECTORY_PICTURES) + "/Temp/";
                 File dir = new File(tempPath);
-                if (dir.isDirectory())
-                {
+                if (dir.isDirectory()) {
                     String[] children = dir.list();
-                    for (int i = 0; i < children.length; i++)
-                    {
+                    for (int i = 0; i < children.length; i++) {
                         new File(dir, children[i]).delete();
                     }
                 }
@@ -149,7 +150,7 @@ public class ProductFragment extends MainAbsFragment {
 
                 File newDir = new File(path);
 
-                if(!newDir.exists()){
+                if(!newDir.exists()) {
                     newDir.mkdirs();
                 }
 
@@ -176,7 +177,7 @@ public class ProductFragment extends MainAbsFragment {
                     int y = (mImageBitmap.getHeight() + bounds.height())/2;
                     canvas.drawText(gText, x, 150, paint);
 
-                    mImageBitmap.compress(Bitmap.CompressFormat.JPEG, 50, outFile);
+                    mImageBitmap.compress(Bitmap.CompressFormat.JPEG, 40, outFile);
 
                     outFile.flush();
                     outFile.close();
