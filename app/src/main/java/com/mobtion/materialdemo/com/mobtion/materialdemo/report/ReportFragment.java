@@ -44,7 +44,7 @@ public class ReportFragment extends MainAbsFragment {
             @Override
             public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
                 try {
-                    SessionInfo.selected_photo = position;
+                    session.selected_photo = position;
                     ((MainAbsFragmentActivity) getActivity()).addFragmentToStack(new ReportDetailFragment());
 
                 } catch (Exception e) {

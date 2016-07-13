@@ -7,7 +7,7 @@ import java.util.ArrayList;
  */
 public class SessionInfo {
 
-    public static int selected_photo = -1;
+    public int selected_photo = -1;
 
     private SessionInfo() {
         super();
